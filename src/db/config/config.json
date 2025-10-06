@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "database_development",
+    "database": "UnaHur_Anti-Social_Net",
     "host": "data/data.db",
     "dialect": "sqlite"
   },
