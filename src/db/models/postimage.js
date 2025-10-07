@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   PostImage.init({
     url: {
-      type: DataTypes.String,
+      type: DataTypes.STRING,
       unique:true,
       allowNull:false
     }
