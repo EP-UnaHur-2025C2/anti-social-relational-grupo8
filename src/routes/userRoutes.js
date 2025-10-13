@@ -5,13 +5,14 @@ const router = Router()
 
 //usuario
 router.get('/', userController.obtenerUsers)
+router.get('/:id', userController.validarUsuarioExiste, userController.obtenerUser)
 router.get('/:id', userController.crearUser)
 router.post('/', userController.crearUser)
-router.put('/:id', userController.actualizarUser)
-router.delete('/:id', userController.eliminarUser)
+router.put('/:id', userController.validarUsuarioExiste, userController.actualizarUser)
+router.delete('/:id', userController.validarUsuarioExiste, userController.eliminarUser)
 
 //publicaciones
-router.post('/:userId/post', postController.crearPublicacion)
+router.post('/:userId/post', validarUsuarioExiste, validarPost, postController.crearPublicacion)
 
 
 module.exports = router

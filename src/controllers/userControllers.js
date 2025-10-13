@@ -13,27 +13,21 @@ const crearUser = async (req, res) => {
 }
 
 const obtenerUsers = async (req , res) => {
-    const user = await User.findAll()
-    res.json(user)
+    const users = await User.findAll()
+    res.json(users)
 }
 
 const obtenerUser = async (req , res) => {
-    const user = await User.findByPK(req.params.id)
-    if (!user) return res.status(404).json({ message: 'usuario no encontrado' })
-    res.json(user)
+    res.json(req.user)
 }
 
 const actualizarUser = async (req , res) => {
-    const user = await User.findByPK(req.params.id)
-    if (!user) return res.status(404).json({ message: 'usuario no encontrado' })
-    await user.update(req.body)
-    res.json(user)
+    req.user.update(req.body)
+    res.json(req.user)
 }
 
 const eliminarUser = async (req , res) => {
-    const user = await User.findByPK(req.params.id)
-    if (!user) return res.status(404).json({ message: 'usuario no encontrado' })
-    await actor.destroy()
+    req.user.destroy()
     res.json({ message: 'Usuario eliminado correctamente' })
 }
 
