@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true, 
         allowNull: false
     },
-    passwordHash: { // Campo para almacenar el hash de la contraseña
+    password: {
         type: DataTypes.STRING,
         allowNull: false
     }
