@@ -8,6 +8,8 @@ const db = require('./db/models');
 const userRouter = require('./routes/userRoutes');
 const tagRouter = require('./routes/tagRoutes');
 const postRoutes = require('./routes/postRoutes');
+const commentRoutes = require('./routes/commentRoutes');
+const followerRoutes = require('./routes/followerRoutes');
 
 // Middlewares Globales
 app.use(express.json())
@@ -15,6 +17,8 @@ app.use(express.json())
 app.use('/user', userRouter);
 app.use('/post', postRoutes);
 app.use('/tag', tagRouter);
+app.use('/comment', commentRoutes);
+app.use(`/followers`, followerRoutes);
 
 const PORT = 3000
 
