@@ -1,5 +1,5 @@
 const { User } = require('../db/models')
-const { User } = require('../models'); 
+
 const { UniqueConstraintError } = require('sequelize');
 
 const ATRIBUTOS_EXCLUIDOS = ['updatedAt']; 

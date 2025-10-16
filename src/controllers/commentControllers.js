@@ -1,4 +1,4 @@
-const { Comment } = require('../models');
+const { Comment } = require('../db/models');
 
 const ATRIBUTOS_EXCLUIDOS = ['updatedAt']; 
 

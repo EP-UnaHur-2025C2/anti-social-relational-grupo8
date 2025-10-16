@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const userController = require('../controllers/userControllers')
+const userControllers = require('../controllers/userControllers')
 const postController = require('../controllers/postControllers')
 const router = Router()
 
@@ -17,6 +17,7 @@ router.put('/:idUser', userControllers.actualizarUsuario);
 
 // D: Eliminar un usuario por su ID 
 router.delete('/:idUser', userControllers.eliminarUsuario);
+router.post('/:userId/post', postController.crearPublicacion);
 
 module.exports = router;
 
@@ -28,8 +29,7 @@ router.post('/', userController.crearUser)
 router.put('/:id', userController.actualizarUser)
 router.delete('/:id', userController.eliminarUser)
 
-//publicaciones
-router.post('/:userId/post', postController.crearPublicacion)
+
 
 
 module.exports = router

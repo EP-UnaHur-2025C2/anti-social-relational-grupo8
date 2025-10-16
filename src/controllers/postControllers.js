@@ -1,4 +1,4 @@
-const { Post, PostImage, Comment, Tag, sequelize } = require('../models');
+const { Post, PostImage, Comment, Tag, sequelize } = require('../db/models');
 const { Op } = require('sequelize');
 
 const MONTHS_THRESHOLD = parseInt(process.env.COMMENTS_VISIBILITY_MONTHS, 10) || 6;

@@ -1,4 +1,4 @@
-const { User, sequelize } = require('../models');
+const { User, sequelize } = require('../db/models');
 const ATRIBUTOS_EXCLUIDOS_USER = ['password', 'email', 'updatedAt'];
 
 // GESTIÓN DE RELACIONES

@@ -1,78 +1,79 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     static associate(models) {
       // 1. Relación 1:M con Post
       User.hasMany(models.Post, {
-        foreignKey: "idUser", 
-        as: "posts"
+        foreignKey: "idUser",
+        as: "posts",
       });
-      
+
       // 2. Relación 1:M con Comment
       User.hasMany(models.Comment, {
         foreignKey: "idUser",
-        as: "comments"
+        as: "comments",
       });
 
       // BONUS:
 
-      // Usuario que está siguiendo a otros 
+      // Usuario que está siguiendo a otros
       User.belongsToMany(models.User, {
-          as: 'Followings',       
-          through: 'Followers',   
-          foreignKey: 'followerId', 
+        as: "Followings", // Usuarios que sigo
+        through: "Followers", // Tabla intermedia
+        foreignKey: "followerId", // Yo soy el seguidor
+        otherKey: "followingId", // El otro es el seguido
       });
-      // Usuario que es seguido por otros 
+
       User.belongsToMany(models.User, {
-          as: 'Followers',        
-          through: 'Followers',
-          foreignKey: 'followingId',
+        as: "userFollowers", // Usuarios que me siguen
+        through: "Followers",
+        foreignKey: "followingId", // Yo soy el seguido
+        otherKey: "followerId", // El otro es el seguidor
       });
     }
   }
-  
-  User.init({
-    idUser: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-      allowNull: false
-    },
-    nickName: { 
-      type: DataTypes.STRING,
-      unique: true, 
-      allowNull: false
-    },
-    firstName: {
+
+  User.init(
+    {
+      idUser: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      nickName: {
         type: DataTypes.STRING,
-        allowNull: true
-    },
-    lastName: {
+        unique: true,
+        allowNull: false,
+      },
+      firstName: {
         type: DataTypes.STRING,
-        allowNull: true
-    },
-    email: {
+        allowNull: true,
+      },
+      lastName: {
         type: DataTypes.STRING,
-        unique: true, 
-        allowNull: false
-    },
-    password: {
+        allowNull: true,
+      },
+      email: {
         type: DataTypes.STRING,
-        allowNull: false
+        unique: true,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+    },
+    {
+      sequelize,
+      modelName: "User",
+      tableName: "Users",
+      timestamps: true,
     }
-  }, {
-    sequelize,
-    modelName: 'User',
-    tableName: 'Users', 
-    timestamps: true 
-  });
+  );
   return User;
 };
-
-
 
 /*'use strict';
 const {

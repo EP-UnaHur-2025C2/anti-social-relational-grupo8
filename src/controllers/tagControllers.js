@@ -115,7 +115,7 @@ const eliminarTag = async (req, res) => {
 module.exports = {
     crearTag,
     obtenerTag,
-    obtenerTag,
+    obtenerTags,
     actualizarTag,
     eliminarTag
 };
