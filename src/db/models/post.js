@@ -47,29 +47,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Post;
 };
-
-/*
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
-    static associate(models) {
-      Post.belongsTo(models.User,{
-        foreignKey: "userId",
-        as:"user"
-      })
-    }
-  }
-  Post.init({
-    texto: DataTypes.STRING
-
-  }, {
-    sequelize,
-    modelName: 'Post',
-    timestamps:false
-  });
-  return Post;
-};
-*/

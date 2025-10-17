@@ -20,14 +20,14 @@ module.exports = (sequelize, DataTypes) => {
       // Usuario que está siguiendo a otros
       User.belongsToMany(models.User, {
         as: "Followings", // Usuarios que sigo
-        through: "Followers", // Tabla intermedia
+        through: "UserFollowings", // Tabla intermedia
         foreignKey: "followerId", // Yo soy el seguidor
         otherKey: "followingId", // El otro es el seguido
       });
 
       User.belongsToMany(models.User, {
-        as: "userFollowers", // Usuarios que me siguen
-        through: "Followers",
+        as: "Followers", // Usuarios que me siguen
+        through: "UserFollowers", // Tabla intermedia
         foreignKey: "followingId", // Yo soy el seguido
         otherKey: "followerId", // El otro es el seguidor
       });
@@ -74,32 +74,3 @@ module.exports = (sequelize, DataTypes) => {
   );
   return User;
 };
-
-/*'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-      User.hasMany(models.Post,
-        {
-          foreignKey: "userId",
-          as: "posts"
-        }
-      )
-    }
-  }
-  User.init({
-    nickname: {
-      type: DataTypes.STRING,
-      unique:true,
-      allowNull:false
-    }
-  }, {
-    sequelize,
-    modelName: 'User',
-    timestamps:false
-  });
-  return User;
-};*/

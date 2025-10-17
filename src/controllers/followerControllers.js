@@ -93,7 +93,6 @@ const obtenerSeguidos = async (req, res) => {
     }
 };
 
-
 // OBTENER LISTA DE SEGUIDORES
 const obtenerSeguidores = async (req, res) => {
     const { followingId } = req.params;

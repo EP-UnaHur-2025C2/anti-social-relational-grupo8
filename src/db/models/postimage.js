@@ -37,29 +37,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return PostImage;
 };
-
-/*
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class PostImage extends Model {
-    static associate(models) {
-      
-    }
-  }
-  PostImage.init({
-    url: {
-      type: DataTypes.STRING,
-      unique:true,
-      allowNull:false
-    }
-  }, {
-    sequelize,
-    modelName: 'PostImage',
-    timestamps:false
-  });
-  return PostImage;
-};
-*/

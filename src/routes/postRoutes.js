@@ -5,7 +5,7 @@ const router = Router();
 // RUTAS CRUD PRINCIPAL DEL POST (Mapeo a: /api/v1/posts)
 
 // C: Crear un nuevo post 
-router.post('/', postControllers.crearPublicacion);
+//router.post('/', postControllers.crearPublicacion);
 
 // R: Obtener todos los posts 
 router.get('/', postControllers.obtenerPublicaciones);

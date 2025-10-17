@@ -34,31 +34,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Tag;
 };
-
-/*
-'use strict';
-const { string } = require('joi');
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Tag extends Model {
-    static associate(models) {
-
-    }
-  }
-  Tag.init({
-    name: {
-    type: DataTypes.STRING,
-    unique: true,
-    allowNull:false
-
-    }
-  }, {
-    sequelize,
-    modelName: 'Tag',
-    timestamps:false
-  });
-  return Tag;
-};
-*/

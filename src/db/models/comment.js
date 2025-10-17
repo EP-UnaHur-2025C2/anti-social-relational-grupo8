@@ -47,23 +47,3 @@ module.exports = (sequelize, DataTypes) => {
   });
   return Comment;
 };
-
-/*
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
-  class Coment extends Model {
-    static associate(models) {
-    }
-  }
-  Coment.init({
-    texto: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Coment',
-  });
-  return Coment;
-};
-*/

@@ -204,26 +204,36 @@ async function asociarEtiquetas(req, res) {
         return res.status(400).json({ message: 'Se requiere un array de nombres de etiquetas (tagNames).' });
     }
 
+    const t = await sequelize.transaction(); 
+
     try {
-        const post = await Post.findByPk(idPost);
-        if (!post) { return res.status(404).json({ message: `Publicación con ID ${idPost} no encontrada.` }); }
+        const post = await Post.findByPk(idPost, { transaction: t }); 
+        if (!post) {
+            await t.rollback(); 
+            return res.status(404).json({ message: `Publicación con ID ${idPost} no encontrada.` });
+        }
         
         const promesasEtiquetas = tagNames.map(tagName => 
             Tag.findOrCreate({
                 where: { name: tagName.toLowerCase() },
-                defaults: { name: tagName.toLowerCase() }
+                defaults: { name: tagName.toLowerCase() },
+                transaction: t 
             })
         );
 
-        const instanciasTag = (await Promise.all(promesasEtiquetas)).map(([tag]) => tag);
-        await post.addTags(instanciasTag);
+        const resultadosEtiquetas = await Promise.all(promesasEtiquetas);
+        const instanciasTag = resultadosEtiquetas.map(([tag]) => tag);
+
+        await post.addTags(instanciasTag, { transaction: t }); 
+        await t.commit(); 
 
         res.status(200).json({ 
-            message: `Etiquetas asociadas exitosamente.`,
+            message: `Etiquetas asociadas exitosamente al Post ${idPost}.`,
             tags: instanciasTag.map(t => ({ idTag: t.idTag, name: t.name }))
         });
 
     } catch (error) {
+        await t.rollback(); 
         res.status(500).json({ message: 'Error al asociar etiquetas.', error: error.message });
     }
 }
@@ -266,29 +276,3 @@ module.exports = {
     asociarEtiquetas,
     eliminarEtiqueta
 };
-
-/*
-const { User, Post } = require('../db/models')
-
-const crearPublicacion = async (req, res) => {
-    try {
-        const userId = req.params.userId
-        const user = await User.findByPk(userId)
-        if (!user) {
-            return res.status(400).json({ message: "No se encontro el usuario" })
-        }
-        const { texto } = req.body
-        const post = await Post.create({
-            texto,
-            userId
-        })
-        res.status(201).json(post)
-    } catch (error) {
-        res.status(500).json({message: error.message})
-    }
-}
-
-module.exports = {
-    crearPublicacion
-}
-*/

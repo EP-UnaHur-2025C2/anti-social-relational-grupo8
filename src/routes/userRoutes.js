@@ -1,6 +1,6 @@
 const { Router } = require('express')
 const userControllers = require('../controllers/userControllers')
-const postController = require('../controllers/postControllers')
+const postControllers = require('../controllers/postControllers')
 const router = Router()
 
 // C: Crear un nuevo usuario 
@@ -17,20 +17,8 @@ router.put('/:idUser', userControllers.actualizarUsuario);
 
 // D: Eliminar un usuario por su ID 
 router.delete('/:idUser', userControllers.eliminarUsuario);
-router.post('/:userId/post', postController.crearPublicacion);
+
+// C: CREAR PUBLICACIÓN ANIDADA
+router.post('/:idUser/post', postControllers.crearPublicacion);
 
 module.exports = router;
-
-/*
-//usuario
-router.get('/', userController.obtenerUsers)
-router.get('/:id', userController.crearUser)
-router.post('/', userController.crearUser)
-router.put('/:id', userController.actualizarUser)
-router.delete('/:id', userController.eliminarUser)
-
-
-
-
-module.exports = router
-*/
