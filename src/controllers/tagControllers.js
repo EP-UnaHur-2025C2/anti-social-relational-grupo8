@@ -7,10 +7,6 @@ const ATRIBUTOS_EXCLUIDOS = ['updatedAt'];
 const crearTag = async (req, res) => {
     const { name } = req.body;
 
-    if (!name) {
-        return res.status(400).json({ message: 'El nombre (name) de la etiqueta es obligatorio.' });
-    }
-
     try {
         const nuevoNombre = name.toLowerCase(); 
 
@@ -19,9 +15,6 @@ const crearTag = async (req, res) => {
         res.status(201).json(nuevaEtiqueta);
 
     } catch (error) {
-        if (error instanceof UniqueConstraintError) {
-            return res.status(409).json({ message: `La etiqueta "${name}" ya existe.` });
-        }
         res.status(500).json({ message: 'Error interno al crear la etiqueta.', details: error.message });
     }
 };
@@ -47,9 +40,6 @@ const obtenerTag = async (req, res) => {
             attributes: { exclude: ATRIBUTOS_EXCLUIDOS }
         });
 
-        if (!etiqueta) {
-            return res.status(404).json({ message: `Etiqueta con ID ${idTag} no encontrada.` });
-        }
         res.status(200).json(etiqueta);
     } catch (error) {
         res.status(500).json({ message: `Error al obtener la etiqueta con ID ${idTag}.`, details: error.message });
@@ -60,10 +50,6 @@ const obtenerTag = async (req, res) => {
 const actualizarTag = async (req, res) => {
     const { idTag } = req.params;
     const { name } = req.body;
-    
-    if (!name) {
-        return res.status(400).json({ message: 'El campo "name" de la etiqueta es obligatorio para actualizar.' });
-    }
 
     try {
         const nuevoNombre = name.toLowerCase();
@@ -72,10 +58,6 @@ const actualizarTag = async (req, res) => {
             where: { idTag }
         });
 
-        if (updatedRows === 0) {
-            return res.status(404).json({ message: `Etiqueta con ID ${idTag} no encontrada.` });
-        }
-
         const etiquetaActualizada = await Tag.findByPk(idTag, {
              attributes: { exclude: ATRIBUTOS_EXCLUIDOS }
         });
@@ -83,9 +65,6 @@ const actualizarTag = async (req, res) => {
         res.status(200).json(etiquetaActualizada);
 
     } catch (error) {
-        if (error instanceof UniqueConstraintError) {
-            return res.status(409).json({ message: `La etiqueta "${name}" ya existe.` });
-        }
         res.status(500).json({ message: 'Error al actualizar la etiqueta.', details: error.message });
     }
 };
@@ -97,10 +76,6 @@ const eliminarTag = async (req, res) => {
         const filasEliminadas = await Tag.destroy({
             where: { idTag }
         });
-
-        if (filasEliminadas === 0) {
-            return res.status(404).json({ message: `Etiqueta con ID ${idTag} no encontrada.` });
-        }
 
         res.status(204).send();
         
@@ -118,4 +93,4 @@ module.exports = {
     obtenerTags,
     actualizarTag,
     eliminarTag
-};
+};  

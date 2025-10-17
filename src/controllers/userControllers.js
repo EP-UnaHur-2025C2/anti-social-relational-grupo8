@@ -5,11 +5,6 @@ const ATRIBUTOS_EXCLUIDOS = ['updatedAt'];
 // 1. CREAR USUARIO 
 const crearUsuario = async (req, res) => {
     const { nickName, firstName, lastName, email, password } = req.body; 
-
-    if (!nickName || !email || !password) {
-        return res.status(400).json({ message: 'Faltan campos obligatorios: nickName, email y password.' });
-    }
-
     try {
         const nuevoUsuario = await User.create({
             nickName,
@@ -25,9 +20,6 @@ const crearUsuario = async (req, res) => {
         res.status(201).json(usuarioRespuesta);
 
     } catch (error) {
-        if (error instanceof UniqueConstraintError) {
-            return res.status(409).json({ message: 'El nickName o email ya está registrado.' });
-        }
         console.error(error);
         res.status(500).json({ message: 'Error interno al crear el usuario.', details: error.message });
     }
@@ -52,10 +44,6 @@ const obtenerUsuario = async (req, res) => {
         const usuario = await User.findByPk(idUser, { 
             attributes: { exclude: ['password', ...ATRIBUTOS_EXCLUIDOS] } 
         });
-
-        if (!usuario) {
-            return res.status(404).json({ message: `Usuario con ID ${idUser} no encontrado.` });
-        }
         res.status(200).json(usuario);
     } catch (error) {
         res.status(500).json({ message: `Error al obtener el usuario con ID ${idUser}.`, details: error.message });
@@ -69,11 +57,6 @@ const actualizarUsuario = async (req, res) => {
 
     try {
         let usuario = await User.findByPk(idUser);
-
-        if (!usuario) {
-            return res.status(404).json({ message: `Usuario con ID ${idUser} no encontrado.` });
-        }
-        
         delete updateData.idUser;
 
         usuario = await usuario.update(updateData);
@@ -84,9 +67,6 @@ const actualizarUsuario = async (req, res) => {
         res.status(200).json(usuarioRespuesta);
 
     } catch (error) {
-        if (error instanceof UniqueConstraintError) {
-            return res.status(409).json({ message: 'El nickName o email proporcionado ya está en uso.' });
-        }
         res.status(500).json({ message: 'Error al actualizar el usuario.', details: error.message });
     }
 };
@@ -95,13 +75,9 @@ const actualizarUsuario = async (req, res) => {
 const eliminarUsuario = async (req, res) => {
     const { idUser } = req.params;
     try {
-        const filasEliminadas = await User.destroy({
+        await User.destroy({
             where: { idUser }
         });
-
-        if (filasEliminadas === 0) {
-            return res.status(404).json({ message: `Usuario con ID ${idUser} no encontrado.` });
-        }
 
         res.status(204).send(); 
         
@@ -119,4 +95,4 @@ module.exports = {
     obtenerUsuario,
     actualizarUsuario,
     eliminarUsuario
-};
+};  
