@@ -23,7 +23,11 @@ app.use(`/followers`, followerRoutes);
 const PORT = 3000
 
 app.listen(PORT, async () => {
-    console.log(`El servidor esta corriendo en el puerto ${PORT}`)
-   //await db.sequelize.sync({ force: true });
-
-})
+  try {
+    await db.sequelize.authenticate();
+    console.log("Conexión a la DB OK");
+  } catch (err) {
+    console.error("Error conectando a la DB:", err);
+  }
+  console.log(`Servidor corriendo en puerto ${PORT}`);
+});
