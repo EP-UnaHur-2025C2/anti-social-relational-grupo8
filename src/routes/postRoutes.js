@@ -2,10 +2,18 @@ const { Router } = require('express');
 const postControllers = require('../controllers/postControllers');
 const {
   validarPost,
-  validarUsuarioExistente,
   validarDescripcionUnica,
   validarPostExistente,
-} = require("../middlewares/validatePost");
+} = require('../middlewares/validatePost');
+
+const {
+  validarImagen,
+  validarImagenDuplicada,
+} = require('../middlewares/validateImage');
+
+const {
+  validarUsuarioExiste,
+} = require('../middlewares/validateUser');
 
 const router = Router();
 
@@ -16,9 +24,10 @@ const router = Router();
 router.post(
   '/',
   validarPost,                
-  validarUsuarioExistente,  
   validarDescripcionUnica,
-  validarPostExistente,
+  validarUsuarioExiste('body'),
+  validarImagen,
+  validarImagenDuplicada,
   postControllers.crearPublicacion
 );
 
@@ -39,10 +48,10 @@ router.delete('/:idPost', validarPostExistente, postControllers.eliminarPublicac
 // RUTAS DE RELACIÓN 
 
 // Agregar una o más imágenes a un post
-router.post('/:idPost/imagenes', postControllers.agregarImagenes);
+router.post('/:idPost/imagenes', validarImagen, validarImagenDuplicada, postControllers.agregarImagenes);
 
 // Eliminar una imagen de un post
-router.delete('/:idPost/imagenes/:idImage', postControllers.eliminarImagen);
+router.delete('/:idPost/imagenes/:idImage', validarImagen, postControllers.eliminarImagen);
 
 // Crear un comentario en un post
 router.post('/:idPost/comentarios', postControllers.crearComentario);
@@ -52,6 +61,5 @@ router.post('/:idPost/etiquetas', postControllers.asociarEtiquetas);
 
 // Desasociar una etiqueta de un post
 router.delete('/:idPost/etiquetas/:idTag', postControllers.eliminarEtiqueta);
-
 
 module.exports = router;

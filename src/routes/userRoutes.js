@@ -8,6 +8,7 @@ const { validarCreacionUsuario,
         validarEmailUpdate,
         validarNickNameUpdate
     } = require('../middlewares/validateUser')
+const { validarPost, validarDescripcionUnica } = require('../middlewares/validatePost');
 const postControllers = require('../controllers/postControllers')
 const router = Router()
 
@@ -27,6 +28,6 @@ router.put('/:idUser', validarUpdateUsuario, validarUsuarioExiste, validarEmailU
 router.delete('/:idUser', validarUsuarioExiste, userControllers.eliminarUsuario);
 
 // C: CREAR PUBLICACIÓN ANIDADA
-router.post('/:idUser/post', postControllers.crearPublicacion);
+router.post('/:idUser/post', validarPost, validarUsuarioExiste, validarDescripcionUnica, postControllers.crearPublicacion);
 
 module.exports = router;
