@@ -24,6 +24,7 @@ const PORT = 3000
 
 app.listen(PORT, async () => {
   try {
+    
     await db.sequelize.authenticate();
     console.log("Conexión a la DB OK");
   } catch (err) {

@@ -3,25 +3,31 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('PostImages', {
-      id: {
+      idImage: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      url: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
+      idPost: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.DATE
+        references: {
+          model: 'Posts', // nombre exacto de la tabla de Posts
+          key: 'idPost'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
-      updatedAt: {
+      imageUrl: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.DATE
+        unique: true
       }
+      
     });
   },
+
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('PostImages');
   }

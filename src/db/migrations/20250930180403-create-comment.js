@@ -2,15 +2,36 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Comemnts', {
-      id: {
+    await queryInterface.createTable('Comments', {
+      idComment: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      texto: {
-        type: Sequelize.STRING
+      idPost: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Posts', 
+          key: 'idPost'   
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      idUser: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Users', 
+          key: 'idUser'  
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      content: {
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
