@@ -100,9 +100,9 @@ const validarUnicidadMail = async (req, res, next) => {
   }
 };
 
-const validarUsuarioExiste = async (req, res, next) => {
+const validarUsuarioExiste = (source = 'params') => async (req, res, next) => {
   try {
-    const { idUser } = req.params
+    const idUser = source === 'body' ? req.body.idUser : req.params.idUser;
     const user = await User.findByPk(idUser)
 
     if (!user) return res.status(404).json({ message: `Usuario con ID ${idUser} no encontrado.`  })
