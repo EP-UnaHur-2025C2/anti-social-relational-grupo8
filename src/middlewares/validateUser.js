@@ -100,19 +100,26 @@ const validarUnicidadMail = async (req, res, next) => {
   }
 };
 
-const validarUsuarioExiste = (source = 'params') => async (req, res, next) => {
-  try {
-    const idUser = source === 'body' ? req.body.idUser : req.params.idUser;
-    const user = await User.findByPk(idUser)
 
-    if (!user) return res.status(404).json({ message: `Usuario con ID ${idUser} no encontrado.`  })
+const validarUsuarioExiste = async (req, res, next) => {
+  const idUser = req.params.idUser || req.body.idUser;
 
-    req.user = user
-    next()
-  } catch (err) {
-    res.status(500).json({ message: err.message })
+  if (!idUser) {
+    return res.status(400).json({ message: 'Falta el idUser en la solicitud.' });
   }
-}
+
+  try {
+    const user = await User.findByPk(idUser);
+    if (!user) {
+      return res.status(404).json({ message: `Usuario con ID ${idUser} no encontrado.` });
+    }
+    next();
+  } catch (error) {
+    console.error('Error en validarUsuarioExiste:', error);
+    res.status(500).json({ message: 'Error verificando existencia del usuario.', error: error.message });
+  }
+};
+
 
 const createUpdateUserSchema = Joi.object({
  nickName: Joi.string()

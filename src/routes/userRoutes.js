@@ -27,7 +27,7 @@ router.put('/:idUser', validarUpdateUsuario, validarUsuarioExiste, validarEmailU
 // D: Eliminar un usuario por su ID 
 router.delete('/:idUser', validarUsuarioExiste, userControllers.eliminarUsuario);
 
-// C: CREAR PUBLICACIÓN ANIDADA
-router.post('/:idUser/post', validarPost, validarUsuarioExiste, validarDescripcionUnica, postControllers.crearPublicacion);
+// C: CREAR PUBLICACIÓN 
+router.post('/:idUser/post', validarUsuarioExiste,validarPost, validarDescripcionUnica, postControllers.crearPublicacion);
 
 module.exports = router;

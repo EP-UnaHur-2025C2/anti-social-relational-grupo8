@@ -29,7 +29,7 @@ router.post(
   '/',
   validarPost,                
   validarDescripcionUnica,
-  validarUsuarioExiste('body'),
+  validarUsuarioExiste,
   validarImagen,
   validarImagenDuplicada,
   postControllers.crearPublicacion
