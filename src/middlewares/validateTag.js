@@ -41,9 +41,7 @@ const validateTagNoExiste = async (req, res, next) => {
     console.error('Error validarTagNoExiste:', err)
     res.status(500).json({ message: 'Error interno al validar etiqueta.', details: err.message })
   }
-}
-
-
+};
 
 const validateExisteTag = async (req, res, next) => {
     const { idTag } = req.params;

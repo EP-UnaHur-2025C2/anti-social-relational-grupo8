@@ -15,6 +15,10 @@ const {
   validarUsuarioExiste,
 } = require('../middlewares/validateUser');
 
+const validateComment = require('../middlewares/validateComment');
+
+const validateTags = require('../middlewares/validateTag');
+
 const router = Router();
 
 // RUTAS CRUD PRINCIPAL DEL POST (Mapeo a: /api/v1/posts)
@@ -54,12 +58,14 @@ router.post('/:idPost/imagenes', validarImagen, validarImagenDuplicada, postCont
 router.delete('/:idPost/imagenes/:idImage', validarImagen, postControllers.eliminarImagen);
 
 // Crear un comentario en un post
-router.post('/:idPost/comentarios', postControllers.crearComentario);
+router.post('/:idPost/comentarios', validateComment.validarCrearComentario, validarPostExistente, postControllers.crearComentario);
 
 // Asociar etiquetas a un post
-router.post('/:idPost/etiquetas', postControllers.asociarEtiquetas); 
+router.post('/:idPost/etiquetas', validateTags.validateTag, validarPostExistente,postControllers.asociarEtiquetas);
+
+
 
 // Desasociar una etiqueta de un post
-router.delete('/:idPost/etiquetas/:idTag', postControllers.eliminarEtiqueta);
+router.delete('/:idPost/etiquetas/:idTag', validateTags.validateExisteTag, validarPostExistente, postControllers.eliminarEtiqueta);
 
 module.exports = router;

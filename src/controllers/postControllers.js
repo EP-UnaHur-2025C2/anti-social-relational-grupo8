@@ -132,13 +132,8 @@ async function crearComentario(req, res) {
     const { idPost } = req.params;
     const { idUser, content } = req.body;
 
-    if (!idUser || !content) {
-        return res.status(400).json({ message: 'El comentario debe tener idUser y content.' });
-    }
-
     try {
         const post = await Post.findByPk(idPost);
-        if (!post) { return res.status(404).json({ message: `Post ${idPost} no encontrado.` }); }
 
         const nuevoComentario = await Comment.create({ idPost, idUser, content });
         res.status(201).json(nuevoComentario);
@@ -200,18 +195,10 @@ async function asociarEtiquetas(req, res) {
     const { idPost } = req.params;
     const { tagNames } = req.body;
 
-    if (!tagNames || !Array.isArray(tagNames) || tagNames.length === 0) {
-        return res.status(400).json({ message: 'Se requiere un array de nombres de etiquetas (tagNames).' });
-    }
-
     const t = await sequelize.transaction(); 
 
     try {
         const post = await Post.findByPk(idPost, { transaction: t }); 
-        if (!post) {
-            await t.rollback(); 
-            return res.status(404).json({ message: `Publicación con ID ${idPost} no encontrada.` });
-        }
         
         const promesasEtiquetas = tagNames.map(tagName => 
             Tag.findOrCreate({
@@ -245,10 +232,6 @@ async function eliminarEtiqueta(req, res) {
     try {
         const post = await Post.findByPk(idPost);
         const tag = await Tag.findByPk(idTag);
-        
-        if (!post || !tag) { 
-            return res.status(404).json({ message: 'Post o Etiqueta no encontrados.' }); 
-        }
 
         const resultado = await post.removeTag(tag);
 

@@ -7,18 +7,10 @@ const actualizarComentario = async (req, res) => {
     const { idComment } = req.params;
     const { content } = req.body;
 
-    if (!content) {
-        return res.status(400).json({ message: 'Solo se permite actualizar el campo "content".' });
-    }
-
     try {
         const [updatedRows] = await Comment.update({ content }, {
             where: { idComment }
         });
-
-        if (updatedRows === 0) {
-            return res.status(404).json({ message: `Comentario con ID ${idComment} no encontrado.` });
-        }
 
         const comentarioActualizado = await Comment.findByPk(idComment, {
             attributes: { exclude: ATRIBUTOS_EXCLUIDOS }
@@ -40,10 +32,6 @@ const eliminarComentario = async (req, res) => {
             where: { idComment }
         });
 
-        if (filasEliminadas === 0) {
-            return res.status(404).json({ message: `Comentario con ID ${idComment} no encontrado.` });
-        }
-
         res.status(204).send();
         
     } catch (error) {
@@ -57,4 +45,4 @@ const eliminarComentario = async (req, res) => {
 module.exports = {
     actualizarComentario,
     eliminarComentario
-};
+}; 
