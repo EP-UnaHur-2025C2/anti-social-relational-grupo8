@@ -159,6 +159,7 @@ async function agregarImagenes(req, res) {
         const resultados = await PostImage.bulkCreate(nuevasImagenes, { ignoreDuplicates: true });
 
         res.status(201).json({ 
+            idImage: PostImage.id,
             message: 'Imágenes agregadas.', 
             agregadas: resultados.length 
         });
@@ -184,7 +185,7 @@ async function eliminarImagen(req, res) {
             return res.status(404).json({ message: 'Imagen no encontrada o no pertenece a este post.' });
         }
 
-        res.status(204).send();
+        res.status(200).json({ message: `Imagen ID: ${idImage} eliminada correctamente.` });
     } catch (error) {
         res.status(500).json({ message: 'Error al eliminar la imagen.', error: error.message });
     }

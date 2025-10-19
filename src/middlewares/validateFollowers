@@ -1,0 +1,26 @@
+const { User } = require('../db/models');
+
+const validarAmbosUsuariosExisten = async (req, res, next) => {
+  try {
+    const { followerId, followingId } = req.params;
+
+    const [follower, following] = await Promise.all([
+      User.findByPk(followerId),
+      User.findByPk(followingId),
+    ]);
+
+    if (!follower || !following) {
+      return res.status(404).json({
+        message: 'Uno o ambos usuarios no existen.',
+      });
+    }
+
+    req.follower = follower;
+    req.following = following;
+    next();
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { validarAmbosUsuariosExisten };
