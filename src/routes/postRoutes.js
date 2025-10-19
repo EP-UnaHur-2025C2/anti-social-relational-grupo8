@@ -52,7 +52,7 @@ router.delete('/:idPost', validarPostExistente, postControllers.eliminarPublicac
 // RUTAS DE RELACIÓN 
 
 // Agregar una o más imágenes a un post
-router.post('/:idPost/imagenes', validarImagen, validarImagenDuplicada, postControllers.agregarImagenes);
+router.post('/:idPost/imagenes', validarImagen, postControllers.agregarImagenes);
 
 // Eliminar una imagen de un post
 router.delete('/:idPost/imagenes/:idImage', validarImagen, postControllers.eliminarImagen);

@@ -3,7 +3,7 @@ console.log("UnaHur - Anti-Social net");
 const express = require('express');
 const app = express();
 const db = require('./db/models');
-
+require('dotenv').config();
 // --- Importación de Rutas ---
 const userRouter = require('./routes/userRoutes');
 const tagRouter = require('./routes/tagRoutes');
@@ -20,7 +20,7 @@ app.use('/tag', tagRouter);
 app.use('/comment', commentRoutes);
 app.use(`/followers`, followerRoutes);
 
-const PORT = 3000
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, async () => {
   try {

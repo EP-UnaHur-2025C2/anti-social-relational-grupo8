@@ -1,7 +1,7 @@
 const { Post, PostImage, Comment, Tag, sequelize } = require('../db/models');
 const { Op } = require('sequelize');
 
-const MONTHS_THRESHOLD = parseInt(process.env.COMMENTS_VISIBILITY_MONTHS, 10) || 6;
+const ANTIGUEDAD_MESES = parseInt(process.env.ANTIGUEDAD_VIBILIDAD_COMENTARIOS , 10) || 6;
 const ATRIBUTOS_POST_BASE = ['idPost', 'idUser', 'description', 'createdAt'];
 
 // CREAR PUBLICACIÓN
@@ -55,7 +55,7 @@ async function obtenerPublicacion(req, res) {
         if (!post) { return res.status(404).json({ message: `Publicación con ID ${idPost} no encontrada.` }); }
         
         const fechaUmbral = new Date(); 
-        fechaUmbral.setMonth(fechaUmbral.getMonth() - MONTHS_THRESHOLD); 
+        fechaUmbral.setMonth(fechaUmbral.getMonth() - ANTIGUEDAD_MESES); 
         
         const comentariosVisibles = await Comment.findAll({
             where: {
@@ -159,7 +159,6 @@ async function agregarImagenes(req, res) {
         const resultados = await PostImage.bulkCreate(nuevasImagenes, { ignoreDuplicates: true });
 
         res.status(201).json({ 
-            idImage: PostImage.id,
             message: 'Imágenes agregadas.', 
             agregadas: resultados.length 
         });

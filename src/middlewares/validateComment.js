@@ -1,6 +1,6 @@
 const Joi = require('joi')
 
-const createCommentSchema = Joi.object({
+const commentSchema = Joi.object({
   idUser: Joi.number()
     .integer()
     .positive()
@@ -12,16 +12,7 @@ const createCommentSchema = Joi.object({
       'any.required': 'El idUser es obligatorio'
     }),
 
-  idPost: Joi.number()
-    .integer()
-    .positive()
-    .required()
-    .messages({
-      'number.base': 'El idPost debe ser un número',
-      'number.integer': 'El idPost debe ser un número entero',
-      'number.positive': 'El idPost debe ser un número positivo',
-      'any.required': 'El idPost es obligatorio'
-    }),
+  
 
   content: Joi.string()
     .trim()
