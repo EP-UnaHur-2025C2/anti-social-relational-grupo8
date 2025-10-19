@@ -117,7 +117,7 @@ async function eliminarPublicacion(req, res) {
             return res.status(404).json({ message: `Publicación con ID ${idPost} no encontrada.` });
         }
 
-        res.status(204).send(); 
+         res.status(200).json({ message: `Post ID: ${idPost} eliminado correctamente.` }); 
 
     } catch (error) {
         res.status(500).json({ 
@@ -192,37 +192,36 @@ async function eliminarImagen(req, res) {
 
 // ASOCIAR ETIQUETAS (Relación M:N)
 async function asociarEtiquetas(req, res) {
-    const { idPost } = req.params;
-    const { tagNames } = req.body;
+  const { idPost } = req.params;
+  const { name } = req.body;
 
-    const t = await sequelize.transaction(); 
+  const t = await sequelize.transaction();
 
-    try {
-        const post = await Post.findByPk(idPost, { transaction: t }); 
-        
-        const promesasEtiquetas = tagNames.map(tagName => 
-            Tag.findOrCreate({
-                where: { name: tagName.toLowerCase() },
-                defaults: { name: tagName.toLowerCase() },
-                transaction: t 
-            })
-        );
-
-        const resultadosEtiquetas = await Promise.all(promesasEtiquetas);
-        const instanciasTag = resultadosEtiquetas.map(([tag]) => tag);
-
-        await post.addTags(instanciasTag, { transaction: t }); 
-        await t.commit(); 
-
-        res.status(200).json({ 
-            message: `Etiquetas asociadas exitosamente al Post ${idPost}.`,
-            tags: instanciasTag.map(t => ({ idTag: t.idTag, name: t.name }))
-        });
-
-    } catch (error) {
-        await t.rollback(); 
-        res.status(500).json({ message: 'Error al asociar etiquetas.', error: error.message });
+  try {
+    const post = await Post.findByPk(idPost, { transaction: t });
+    if (!post) {
+      await t.rollback();
+      return res.status(404).json({ message: "Post no encontrado." });
     }
+
+    const [tag] = await Tag.findOrCreate({
+      where: { name: name.toLowerCase() },
+      defaults: { name: name.toLowerCase() },
+      transaction: t
+    });
+
+    await post.addTag(tag, { transaction: t });
+    await t.commit();
+
+    res.status(200).json({
+      message: `Etiqueta '${tag.name}' asociada exitosamente al Post ${idPost}.`,
+      tag: { idTag: tag.idTag, name: tag.name }
+    });
+
+  } catch (error) {
+    await t.rollback();
+    res.status(500).json({ message: "Error al asociar etiqueta.", error: error.message });
+  }
 }
 
 // ELIMINAR ETIQUETA (Relación M:N)
