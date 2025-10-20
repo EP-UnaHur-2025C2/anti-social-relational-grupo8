@@ -43,17 +43,13 @@ const dejarDeSeguirUsuario = async (req, res) => {
         const follower = await User.findByPk(followerId);
         const following = await User.findByPk(followingId);
 
-        if (!follower || !following) {
-            return res.status(404).json({ message: 'Uno o ambos usuarios no fueron encontrados.' });
-        }
-
         const resultado = await follower.removeFollowing(followingId);
 
         if (resultado === 0) {
             return res.status(404).json({ message: 'La relación de seguimiento no existía.' });
         }
 
-        res.status(204).send(); 
+        res.status(200).json({ message: `El usuario ID: ${followerId} dejo de seguir a al Usuario ID: ${followingId}` });
 
     } catch (error) {
         res.status(500).json({ message: 'Error al dejar de seguir al usuario.', error: error.message });
@@ -95,10 +91,10 @@ const obtenerSeguidos = async (req, res) => {
 
 // OBTENER LISTA DE SEGUIDORES
 const obtenerSeguidores = async (req, res) => {
-    const { followingId } = req.params;
+    const { followerId } = req.params;
 
     try {
-        const usuario = await User.findByPk(followingId, {
+        const usuario = await User.findByPk(followerId, {
             attributes: ['idUser', 'nickName'],
             include: [{
                 model: sequelize.models.User,
@@ -109,7 +105,7 @@ const obtenerSeguidores = async (req, res) => {
         });
 
         if (!usuario) {
-            return res.status(404).json({ message: `Usuario con ID ${followingId} no encontrado.` });
+            return res.status(404).json({ message: `Usuario con ID ${followerId} no encontrado.` });
         }
 
         res.status(200).json({

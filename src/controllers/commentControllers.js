@@ -32,7 +32,7 @@ const eliminarComentario = async (req, res) => {
             where: { idComment }
         });
 
-        res.status(204).send();
+         res.status(200).json({ message: `Comentario ID: ${idComment} eliminada del post correctamente.` });
         
     } catch (error) {
         res.status(500).json({ 

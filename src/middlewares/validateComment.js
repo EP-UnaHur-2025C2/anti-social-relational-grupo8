@@ -1,5 +1,5 @@
 const Joi = require('joi')
-
+const { Comment } = require('../db/models');
 const commentSchema = Joi.object({
   idUser: Joi.number()
     .integer()
@@ -69,6 +69,7 @@ const validarActualizarComentario = (req, res, next) => {
 
 const commentExists = async (req, res, next) => {
   try {
+    const {idComment} = req.params
     const comentario = await Comment.findByPk(idComment)
     if (!comentario) {
       return res.status(404).json({ message: `Comentario con ID ${idComment} no encontrado.` })
@@ -82,6 +83,7 @@ const commentExists = async (req, res, next) => {
 }
 const commentNoExiste = async (req, res, next) => {
   try {
+    const {idComment} = req.params
     const comentario = await Comment.findByPk(idComment)
     if (comentario) {
       return res.status(409).json({ message: `Comentario con ID ${idComment} ya existe.` })

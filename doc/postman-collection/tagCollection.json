@@ -1,34 +1,35 @@
 {
   "info": {
-    "name": "collection",
+    "name": "tagCollection",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "ObtenerUsuarios",
+      "name": "actualizarTag",
       "event": [],
       "request": {
-        "method": "GET",
+        "method": "PUT",
         "header": [],
         "auth": {
           "type": "noauth"
         },
         "description": "",
         "url": {
-          "raw": "http://localhost:3000/user",
+          "raw": "http://localhost:3000/tag/1",
           "protocol": "http",
           "host": [
             "localhost:3000"
           ],
           "path": [
-            "user"
+            "tag",
+            "1"
           ],
           "query": [],
           "variable": []
         },
         "body": {
           "mode": "raw",
-          "raw": "",
+          "raw": "{\n  \"name\": \"etiquetaprueba5\"\n  \n  \n}",
           "options": {
             "raw": {
               "language": "json"
@@ -38,7 +39,7 @@
       }
     },
     {
-      "name": "crearUsuario",
+      "name": "crearTag",
       "event": [],
       "request": {
         "method": "POST",
@@ -48,20 +49,20 @@
         },
         "description": "",
         "url": {
-          "raw": "http://localhost:3000/user",
+          "raw": "http://localhost:3000/tag",
           "protocol": "http",
           "host": [
             "localhost:3000"
           ],
           "path": [
-            "user"
+            "tag"
           ],
           "query": [],
           "variable": []
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n\"nickName\": \"SachS\",\n\"email\": \"emailfalso123@gmail.com\",\n\"password\": 1235421\n}\n",
+          "raw": "{\n  \"name\": \"etiquetaPrueba\"\n\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -71,7 +72,32 @@
       }
     },
     {
-      "name": "obtenerUsuario",
+      "name": "eliminarTag",
+      "event": [],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "http://localhost:3000/tag/1",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "tag",
+            "1"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "obtenerTag",
       "event": [],
       "request": {
         "method": "GET",
@@ -81,14 +107,38 @@
         },
         "description": "",
         "url": {
-          "raw": "http://localhost:3000/user/2",
+          "raw": "http://localhost:3000/tag/1",
           "protocol": "http",
           "host": [
             "localhost:3000"
           ],
           "path": [
-            "user",
-            "2"
+            "tag",
+            "1"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "obtenerTags",
+      "event": [],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "http://localhost:3000/tag",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "tag"
           ],
           "query": [],
           "variable": []

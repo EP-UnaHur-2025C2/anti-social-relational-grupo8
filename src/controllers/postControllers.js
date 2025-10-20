@@ -238,7 +238,7 @@ async function eliminarEtiqueta(req, res) {
             return res.status(200).json({ message: 'La relación Post-Tag no existía, no se realizó ninguna acción.' });
         }
 
-        res.status(204).send();
+        res.status(200).json({ message: `Etiqueta ID: ${idImage} eliminada del post correctamente.` });
 
     } catch (error) {
         res.status(500).json({ message: 'Error al eliminar la etiqueta del post.', error: error.message });

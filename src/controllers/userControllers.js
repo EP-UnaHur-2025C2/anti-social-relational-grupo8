@@ -79,7 +79,7 @@ const eliminarUsuario = async (req, res) => {
             where: { idUser }
         });
 
-        res.status(204).send(); 
+        res.status(200).json({ message: `Etiqueta ID: ${idUser} eliminada del post correctamente.` });
         
     } catch (error) {
         res.status(500).json({ 

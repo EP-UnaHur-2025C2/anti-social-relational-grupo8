@@ -1,6 +1,7 @@
 {
   "info": {
     "name": "postCollection",
+    "description": "",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -15,14 +16,14 @@
         },
         "description": "",
         "url": {
-          "raw": "http://localhost:3000/post/1/etiquetas",
+          "raw": "http://localhost:3000/post/4/etiquetas",
           "protocol": "http",
           "host": [
             "localhost:3000"
           ],
           "path": [
             "post",
-            "1",
+            "4",
             "etiquetas"
           ],
           "query": [],
@@ -30,7 +31,42 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"tagNames\": [\"Cacic2025\"]\n  \n}",
+          "raw": "{  \n  \"name\": \"etiquetaPrueba1\"\n  \n  \n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "crearImagen",
+      "event": [],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "http://localhost:3000/post/1/imagenes",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "post",
+            "1",
+            "imagenes"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"imageUrls\":[\"https://ruridragon.com/wp-content/uploads/2025/05/ruridragon_illustration.webp\"]\n  \n}",
           "options": {
             "raw": {
               "language": "json"
@@ -50,12 +86,14 @@
         },
         "description": "",
         "url": {
-          "raw": "http://localhost:3000/post",
+          "raw": "http://localhost:3000/user/1/post",
           "protocol": "http",
           "host": [
             "localhost:3000"
           ],
           "path": [
+            "user",
+            "1",
             "post"
           ],
           "query": [],
@@ -63,7 +101,68 @@
         },
         "body": {
           "mode": "raw",
-          "raw": "{\n  \"idUser\":1,\n  \"description\": \"Hola\"\n  \n}",
+          "raw": "{\n   \"idUser\": 1,\n  \"description\": \"Holaasdasdasdasdasdasdasdsasdasdasdasdd\"\n  \n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "eliminarComentario",
+      "event": [],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "http://localhost:3000/comment/1",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "comment",
+            "1"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "eliminarImagen",
+      "event": [],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "http://localhost:3000/post/1/imagenes/27",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "post",
+            "1",
+            "imagenes",
+            "27"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idPost\":1,\n  \"imageUrls\":[\"https://ruridragon.com/wp-content/uploads/2025/05/ruridragon_illustration.webp\"]\n\n  \n}",
           "options": {
             "raw": {
               "language": "json"
@@ -83,14 +182,14 @@
         },
         "description": "",
         "url": {
-          "raw": "http://localhost:3000/post/1",
+          "raw": "http://localhost:3000/post/4",
           "protocol": "http",
           "host": [
             "localhost:3000"
           ],
           "path": [
             "post",
-            "1"
+            "4"
           ],
           "query": [],
           "variable": []
@@ -122,20 +221,86 @@
       }
     },
     {
-      "name": "crearImagen",
+      "name": "eliminarPublicacion",
       "event": [],
       "request": {
-        "method": "GET",
+        "method": "DELETE",
         "header": [],
         "auth": {
           "type": "noauth"
         },
         "description": "",
         "url": {
-          "raw": "",
-          "protocol": "",
-          "host": [],
-          "path": [],
+          "raw": "http://localhost:3000/post/2",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "post",
+            "2"
+          ],
+          "query": [],
+          "variable": []
+        }
+      }
+    },
+    {
+      "name": "actualizarPost",
+      "event": [],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "http://localhost:3000/post/3",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "post",
+            "3"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"description\": \"asdasdasdasdasdasdasdas\"\n  \n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "eliminarTagDelPost",
+      "event": [],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "http://localhost:3000/post/4/etiquetas/2",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "post",
+            "4",
+            "etiquetas",
+            "2"
+          ],
           "query": [],
           "variable": []
         }

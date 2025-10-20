@@ -77,7 +77,7 @@ const eliminarTag = async (req, res) => {
             where: { idTag }
         });
 
-        res.status(204).send();
+       res.status(200).json({ message: `Etiqueta ID: ${idImage} eliminada del post correctamente.` });
         
     } catch (error) {
         res.status(500).json({ 
