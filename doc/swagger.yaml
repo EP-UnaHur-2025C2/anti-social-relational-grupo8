@@ -555,8 +555,6 @@ components:
           type: string
           example: "etiquetaPrueba"
 
-components:
-  schemas:
     User:
       type: object
       properties:
@@ -566,11 +564,11 @@ components:
         nickName:
           type: string
           example: "SachS1"
-          description: "El nickName debe ser unico"
+          description: "El nickName debe ser único"
         email:
           type: string
           example: "emailfal1so123@gmail.com"
-          description: "El email debe ser unico"
+          description: "El email debe ser único"
         password:
           type: string
           example: "1235421"
@@ -599,7 +597,6 @@ components:
           type: string
           example: "Fernandez"
 
-          
     UserUpdate:
       type: object
       properties:
@@ -613,8 +610,7 @@ components:
         password:
           type: string
           example: "nuevo123"
-          openapi: 3.0.0
-   
+
     Post:
       type: object
       properties:
@@ -656,14 +652,6 @@ components:
             type: string
             format: uri
 
-    TagInput:
-      type: object
-      required:
-        - name
-      properties:
-        name:
-          type: string
-  schemas:
     Comment:
       type: object
       properties:
