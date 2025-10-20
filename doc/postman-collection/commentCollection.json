@@ -77,17 +77,22 @@
       "name": "eliminarComentario",
       "event": [],
       "request": {
-        "method": "GET",
+        "method": "DELETE",
         "header": [],
         "auth": {
           "type": "noauth"
         },
         "description": "",
         "url": {
-          "raw": "",
-          "protocol": "",
-          "host": [],
-          "path": [],
+          "raw": "http://localhost:3000/comment/1",
+          "protocol": "http",
+          "host": [
+            "localhost:3000"
+          ],
+          "path": [
+            "comment",
+            "1"
+          ],
           "query": [],
           "variable": []
         }

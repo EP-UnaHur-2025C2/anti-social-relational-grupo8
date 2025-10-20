@@ -4,7 +4,12 @@ const express = require('express');
 const app = express();
 const db = require('./db/models');
 require('dotenv').config();
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./doc/swagger.yaml');
 // --- Importación de Rutas ---
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 const userRouter = require('./routes/userRoutes');
 const tagRouter = require('./routes/tagRoutes');
 const postRoutes = require('./routes/postRoutes');
